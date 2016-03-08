@@ -73,7 +73,7 @@ def get_messages_for_file(args):
 def print_messages(messages, args):
     if len(messages) > 0:
         print_astericks()
-        print_file_props(args)
+        print_file_props(args['path'])
 
         for msg in messages:
             print msg
@@ -82,7 +82,7 @@ def print_messages(messages, args):
 
     elif no_flags_set(args):
         print_astericks()
-        print_file_props(args)
+        print_file_props(args['path'])
         print_astericks()
 
 
@@ -113,12 +113,12 @@ def last_24_hrs(path):
         return []
 
 
-def print_file_props(args):
-    file_stats = os.stat(args['path'])
+def print_file_props(path):
+    file_stats = os.stat(path)
     stats = {'file_created': file_stats.st_ctime, 'file_modified': file_stats.st_mtime,
              'file_last_accessed': file_stats.st_atime, 'file_owner': file_stats.st_uid}
 
-    print "File: %s" % args['path']
+    print "File: %s" % path
     print "file_owner: %s" % find_owner(stats['file_owner'])
 
     for attr, epoch in stats.items():
