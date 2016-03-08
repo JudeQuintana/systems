@@ -57,15 +57,13 @@ def select_opts_for_file(args):
     messages = []
 
     if args.get('setuid'):
-        messages.append(check_file(args, 'setuid'))
+        messages.extend(check_file(args, 'setuid'))
     if args.get('setgid'):
-        messages.append(check_file(args, 'setgid'))
+        messages.extend(check_file(args, 'setgid'))
     if args.get('world_writable'):
-        messages.append(check_file(args, 'world_writable'))
+        messages.extend(check_file(args, 'world_writable'))
     if args.get('last_modified'):
-        messages.append(last_24_hrs(args['path']))
-
-    messages = [msg for msg in messages if msg is not None]
+        messages.extend(last_24_hrs(args['path']))
 
     if len(messages) > 0:
         print_astericks()
@@ -92,7 +90,9 @@ def check_file(args, mode):
     mode_set = os.stat(args['path']).st_mode & file_modes[mode]
 
     if bool(mode_set):
-        return "Has %s set!" % mode
+        return ["Has %s set!" % mode]
+    else:
+        return []
 
 
 def last_24_hrs(path):
@@ -102,7 +102,9 @@ def last_24_hrs(path):
     days_since_last_modified = (datetime.now() - last_modified).days
 
     if days_since_last_modified >= 1:
-        return "Has been %s day(s) since last modified" % str(days_since_last_modified)
+        return ["Has been %s day(s) since last modified" % str(days_since_last_modified)]
+    else:
+        return []
 
 
 def print_file_props(args):
