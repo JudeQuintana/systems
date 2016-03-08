@@ -30,7 +30,9 @@ def cli_parse():
 
 def deep_list_dir(args):
     check_file_exists(args['path'])
-    select_opts_for_file(args)
+
+    messages = get_messages_for_file(args)
+    print_messages(messages, args)
 
     if os.path.isdir(args['path']):
         list_ = os.listdir(args['path'])
@@ -53,18 +55,22 @@ def check_file_exists(path):
         exit(0)
 
 
-def select_opts_for_file(args):
+def get_messages_for_file(args):
     messages = []
 
     if args.get('setuid'):
-        messages.extend(check_file(args, 'setuid'))
+        messages.extend(check_file(args['path'], 'setuid'))
     if args.get('setgid'):
-        messages.extend(check_file(args, 'setgid'))
+        messages.extend(check_file(args['path'], 'setgid'))
     if args.get('world_writable'):
-        messages.extend(check_file(args, 'world_writable'))
+        messages.extend(check_file(args['path'], 'world_writable'))
     if args.get('last_modified'):
         messages.extend(last_24_hrs(args['path']))
 
+    return messages
+
+
+def print_messages(messages, args):
     if len(messages) > 0:
         print_astericks()
         print_file_props(args)
@@ -80,14 +86,14 @@ def select_opts_for_file(args):
         print_astericks()
 
 
-def check_file(args, mode):
+def check_file(path, mode):
     file_modes = {
         'setuid': stat.S_ISUID,
         'setgid': stat.S_ISGID,
         'world_writable': stat.S_IWOTH,
     }
 
-    mode_set = os.stat(args['path']).st_mode & file_modes[mode]
+    mode_set = os.stat(path).st_mode & file_modes[mode]
 
     if bool(mode_set):
         return ["Has %s set!" % mode]
