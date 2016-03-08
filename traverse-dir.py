@@ -37,10 +37,10 @@ def deep_list_dir(args):
     else:
         return
 
+    current_path = args['path']
+
     for fn in list_:
         next_path = os.path.join(args['path'], fn)
-        current_path = args['path']
-
         args['path'] = next_path
 
         deep_list_dir(args)
