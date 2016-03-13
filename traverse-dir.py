@@ -29,9 +29,7 @@ def cli_parse():
 
 
 def deep_list_dir(args):
-    check_file_exists(args['path'])
-
-    messages = get_messages_for_flags(args)
+    messages = get_messages_for_file(args)
     print_messages(messages, args)
 
     if os.path.isdir(args['path']):
@@ -55,7 +53,7 @@ def check_file_exists(path):
         exit(0)
 
 
-def get_messages_for_flags(args):
+def get_messages_for_file(args):
     messages = []
 
     if args.get('setuid'):
@@ -142,6 +140,7 @@ def find_owner(_id):
 
 def main():
     args = cli_parse()
+    check_file_exists(args['path'])
     deep_list_dir(args)
 
 
