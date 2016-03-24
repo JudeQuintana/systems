@@ -18,7 +18,7 @@ def pinger(queue, args):
 
 
 def cli_parse():
-    parser = argparse.ArgumentParser(description='Will ping all address in parallel')
+    parser = argparse.ArgumentParser(description='Will ping all address in given subnet in parallel')
     parser.add_argument('subnet', help='Input network subnet ie(192.168.0.1/24)')
     parser.add_argument('-v', '--verbose', help='display what hosts are not responding', action='store_true')
 
