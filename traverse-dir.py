@@ -2,7 +2,7 @@
 
 # jude.quintana@gmail.com
 #
-# !!! USES PYTHON 2.7.11 !!!
+# works with both python 2.7.11 and python 3.5.1
 #
 # $Id: takehome-exam.ph,v 1.3 2016/02/25 07:27:25 jquintana Exp jquintana $
 # $Header: /Users/judequintana/SecureSet/systems/scripts/takehome-exam.py 1.3 jquintana Exp jquintana $
@@ -15,7 +15,7 @@ from pwd import getpwuid
 
 
 def cli_parse():
-    parser = argparse.ArgumentParser(description='lists out filename properties, use flags to filter')
+    parser = argparse.ArgumentParser(description='Lists out filename properties, use flags to filter')
     parser.add_argument('path', help='Input path or filename')
     parser.add_argument('-s', '--setuid', help='List all files with setuid bit set', action='store_true')
     parser.add_argument('-g', '--setgid', help='List all files with setgid bit set', action='store_true')
@@ -49,7 +49,7 @@ def deep_list_dir(args):
 
 def check_file_exists(path):
     if not os.path.isfile(path) and not os.path.isdir(path):
-        print "File not found"
+        print("File not found")
         exit(0)
 
 
@@ -74,7 +74,7 @@ def print_messages(messages, args):
         print_file_props(args['path'])
 
         for msg in messages:
-            print msg
+            print(msg)
 
         print_astericks()
 
@@ -116,17 +116,17 @@ def print_file_props(path):
     stats = {'file_created': file_stats.st_ctime, 'file_modified': file_stats.st_mtime,
              'file_last_accessed': file_stats.st_atime, 'file_owner': file_stats.st_uid}
 
-    print "File: %s" % path
-    print "file_owner: %s" % find_owner(stats['file_owner'])
+    print("File: %s" % path)
+    print("file_owner: %s" % find_owner(stats['file_owner']))
 
     for attr, epoch in stats.items():
         if not attr == 'file_owner':
-            print "%s : %s" % (attr, datetime.fromtimestamp(epoch))
+            print("%s : %s" % (attr, datetime.fromtimestamp(epoch)))
     print
 
 
 def print_astericks():
-    print '*' * 50
+    print('*' * 50)
 
 
 def no_flags_set(args):
