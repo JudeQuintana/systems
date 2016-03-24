@@ -9,6 +9,8 @@ def pinger(queue, args):
     """Pings subnet"""
     while True:
         ip = queue.get()
+        if ip is None:
+            break
 
         ret = subprocess.call(["ping", "-c", "1", ip],
                               stdout=subprocess.DEVNULL,
