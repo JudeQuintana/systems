@@ -25,8 +25,8 @@ def pinger(queue):
 
 
 def cli_parse():
-    parser = argparse.ArgumentParser(description='Lists out filename properties, use flags to filter')
-    parser.add_argument('subnet', help='Input path or filename')
+    parser = argparse.ArgumentParser(description='Will ping all address in parallel')
+    parser.add_argument('subnet', help='Input network subnet ie(192.168.0.1/24)')
 
     args = parser.parse_args()
 
