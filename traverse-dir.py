@@ -1,12 +1,5 @@
 #!/usr/bin/python
 
-# jude.quintana@gmail.com
-#
-# works with both python 2.7.11 and python 3.5.1
-#
-# $Id: takehome-exam.ph,v 1.3 2016/02/25 07:27:25 jquintana Exp jquintana $
-# $Header: /Users/judequintana/SecureSet/systems/scripts/takehome-exam.py 1.3 jquintana Exp jquintana $
-
 import os
 import stat
 import argparse
